@@ -1,21 +1,23 @@
 package kz.segizbay.springcourse.FirstSecurityApp.configs;
 
-import kz.segizbay.springcourse.FirstSecurityApp.security.AuthProviderImpl;
+import kz.segizbay.springcourse.FirstSecurityApp.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final AuthProviderImpl authProvider;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public SecurityConfig(AuthProviderImpl authProvider) {
-        this.authProvider = authProvider;
+    public SecurityConfig(PersonDetailsService personDetailsService) {
+        this.personDetailsService = personDetailsService;
     }
 
     @Bean
@@ -29,8 +31,13 @@ public class SecurityConfig {
                 .formLogin(formLogin ->
                         formLogin.permitAll()
                 )
-                .authenticationProvider(authProvider);
+                .userDetailsService(personDetailsService);
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
     }
 }
