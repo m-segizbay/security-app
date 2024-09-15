@@ -20,7 +20,7 @@ public class Person {
 
     @Column(name = "year_of_birth")
     @Min(value = 1900, message = "Год рождения должен быть больше, чем 1900")
-    private String yearOfBirth;
+    private int yearOfBirth;
 
     @Column(name = "password")
     private String password;
@@ -28,7 +28,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(String username, String yearOfBirth, String password) {
+    public Person(String username, int yearOfBirth, String password) {
         this.username = username;
         this.yearOfBirth = yearOfBirth;
         this.password = password;
@@ -50,11 +50,11 @@ public class Person {
         this.username = username;
     }
 
-    public String getYearOfBirth() {
+    public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(String yearOfBirth) {
+    public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
