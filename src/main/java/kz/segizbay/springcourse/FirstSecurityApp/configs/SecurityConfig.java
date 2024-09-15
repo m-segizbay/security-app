@@ -43,7 +43,6 @@ public class SecurityConfig {
                         logout
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/auth/login"))
-                .csrf(csrf -> csrf.disable())
                 .userDetailsService(personDetailsService);
         return http.build();
     }
