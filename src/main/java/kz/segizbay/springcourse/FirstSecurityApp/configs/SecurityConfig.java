@@ -25,12 +25,17 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/auth/login", "/error").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
-                        formLogin.permitAll()
+                        formLogin
+                                .loginPage("/auth/login")
+                                .loginProcessingUrl("/process_login")
+                                .defaultSuccessUrl("/hello", true)
+                                .failureUrl("/auth/login?error")
                 )
+                .csrf(csrf -> csrf.disable())
                 .userDetailsService(personDetailsService);
 
         return http.build();
